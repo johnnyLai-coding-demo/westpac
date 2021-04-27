@@ -1,5 +1,6 @@
 package com.fifi.java.practise.springhibernate;
 
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -39,7 +40,25 @@ public class PostReadingApplication implements CommandLineRunner {
 	@ResponseBody
 	public ResponseEntity<Object> echo() {					
         return new ResponseEntity<Object>("Hello World", HttpStatus.OK);
-	} 	
+	}
+	
+    //get parameter
+    //The @ResponseBody annotation is used to serialize the JSON document
+//	@GetMapping(path = "/comments", produces=MediaType.APPLICATION_JSON_VALUE)
+//	@ResponseBody
+//	public ResponseEntity<Object> greetingJson() {
+//						
+//		
+//		Employee employee = new Employee();			
+//		employee.setName("Fifi");
+//		Employee employee2 = new Employee();			
+//		employee2.setName("Fifi2");		
+//		
+//		List employeeList = new ArrayList();
+//		employeeList.add(employee);
+//		employeeList.add(employee2);
+//        return new ResponseEntity<Object>(employeeList, HttpStatus.OK);
+//	}	
 	
 	@Override		
 	public void run(String... args) throws Exception {
@@ -58,7 +77,11 @@ public class PostReadingApplication implements CommandLineRunner {
 		
 		logger.info("All users 2 -> {}", repository.findAll());
 		
-		List students = repository.findByParentId(1L);
+		
+		
+		List students = repository.findByDate(java.sql.Timestamp.valueOf("2008-01-01 00:00:00"), java.sql.Timestamp.valueOf("2013-09-04 13:30:00"));
+		
+		//List students = repository.findByParentId(1L);
 		
 		System.out.println(students);
 	}
