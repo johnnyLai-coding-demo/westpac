@@ -1,6 +1,6 @@
 package com.fifi.java.practise.springhibernate;
 
-import java.util.Date;
+
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -9,12 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Profile;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,46 +45,49 @@ public class PostReadingApplication implements CommandLineRunner {
 	
     //get parameter
     //The @ResponseBody annotation is used to serialize the JSON document
-//	@GetMapping(path = "/comments", produces=MediaType.APPLICATION_JSON_VALUE)
-//	@ResponseBody
-//	public ResponseEntity<Object> greetingJson() {
-//						
-//		
-//		Employee employee = new Employee();			
-//		employee.setName("Fifi");
-//		Employee employee2 = new Employee();			
-//		employee2.setName("Fifi2");		
-//		
-//		List employeeList = new ArrayList();
-//		employeeList.add(employee);
-//		employeeList.add(employee2);
-//        return new ResponseEntity<Object>(employeeList, HttpStatus.OK);
-//	}	
+	@GetMapping(path = "/comments", produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<Object> getComments(@RequestParam(value = "postId") String postId) {
+						
+		System.out.println(postId);
+		List comments = repository.findCommentByPostId(Long.parseLong(postId));
+
+        return new ResponseEntity<Object>(comments, HttpStatus.OK);
+	}	
+	
+	//path parameter
+	@GetMapping(path = "/posts", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Object> page(@RequestParam(value = "startDate") String startDate, @RequestParam(value = "endDate") String endDate) {
+		
+		List posts = repository.findPostByDate(java.sql.Timestamp.valueOf(startDate + " 00:00:00"), java.sql.Timestamp.valueOf(endDate + " 23:59:59"));
+
+        return new ResponseEntity<Object>(posts, HttpStatus.OK);
+	}	
 	
 	@Override		
 	public void run(String... args) throws Exception {
 
-		logger.info("Student id 10001 -> {}", repository.findById(1L));
-		
-		logger.info("All users 1 -> {}", repository.findAll());
+//		logger.info("Student id 10001 -> {}", repository.findById(1L));
+//		
+		logger.info("All posts -> {}", repository.findAll());
 		
 		//Insert
-		logger.info("Inserting -> {}", repository.save(new Post("John", 1L)));
-		logger.info("Inserting -> {}", repository.save(new Post("John2", 1L)));
+//		logger.info("Inserting -> {}", repository.save(new Post("John", 1L)));
+//		logger.info("Inserting -> {}", repository.save(new Post("John2", 1L)));
 		//Update
 		//logger.info("Update 10001 -> {}", repository.save(new Post(10001L, "Name-Updated", null)));
 
 		//repository.deleteById(10002L);
 		
-		logger.info("All users 2 -> {}", repository.findAll());
+//		logger.info("All users 2 -> {}", repository.findAll());
 		
 		
 		
-		List students = repository.findByDate(java.sql.Timestamp.valueOf("2008-01-01 00:00:00"), java.sql.Timestamp.valueOf("2013-09-04 13:30:00"));
-		
+		//List students = repository.findByDate(java.sql.Timestamp.valueOf("2008-01-01 00:00:00"), java.sql.Timestamp.valueOf("2013-09-04 13:30:00"));
+//		List students = repository.findPostByDate(java.sql.Timestamp.valueOf("2008-01-01 00:00:00"), java.sql.Timestamp.valueOf("2013-09-04 00:00:00"));
 		//List students = repository.findByParentId(1L);
 		
-		System.out.println(students);
+//		System.out.println(students);
 	}
 
 
