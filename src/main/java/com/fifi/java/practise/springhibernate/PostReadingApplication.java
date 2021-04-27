@@ -9,12 +9,20 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.fifi.java.practise.springhibernate.obj.Post;
 import com.fifi.java.practise.springhibernate.repository.PostRepository;
 
 @SpringBootApplication
-
+@RestController
+@RequestMapping("/api")
 public class PostReadingApplication implements CommandLineRunner {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -27,8 +35,13 @@ public class PostReadingApplication implements CommandLineRunner {
 	}
 
 	
-	@Override	
-	@Profile("!test")
+	@GetMapping(path = "/echo", produces=MediaType.TEXT_PLAIN_VALUE)
+	@ResponseBody
+	public ResponseEntity<Object> echo() {					
+        return new ResponseEntity<Object>("Hello World", HttpStatus.OK);
+	} 	
+	
+	@Override		
 	public void run(String... args) throws Exception {
 
 		logger.info("Student id 10001 -> {}", repository.findById(1L));
