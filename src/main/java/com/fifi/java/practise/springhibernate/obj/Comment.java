@@ -101,7 +101,27 @@ public class Comment {
 				+ "]";
 	}
 
-
+	
+	//ignore ID as it is auto-increment
+	@Override  
+	public boolean equals(Object obj)   
+	{  
+		if (obj == null)   
+		return false;  
+ 
+		if (obj.getClass() == this.getClass())	{
+			
+			Comment commentObj = (Comment) obj;
+			
+			if (this.getBody().equals(commentObj.getBody()) && 
+				this.getEmail().equals(commentObj.getEmail()) &&
+				this.getName().equals(commentObj.getName()) &&
+				this.getPostId().longValue() == commentObj.getPostId().longValue())	{
+				return true;								
+			}
+		}
+		return false;
+	}  
 
 }
 

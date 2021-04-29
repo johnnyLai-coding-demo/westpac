@@ -19,13 +19,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.context.annotation.Profile;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fifi.java.practise.springhibernate.obj.Comment;
@@ -34,14 +28,15 @@ import com.fifi.java.practise.springhibernate.repository.CommentDBfactory;
 import com.fifi.java.practise.springhibernate.repository.CommentRepository;
 import com.fifi.java.practise.springhibernate.repository.PostDBfactory;
 import com.fifi.java.practise.springhibernate.repository.PostRepository;
+import com.fifi.java.practise.util.FifiUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 
-@Profile("!test")
+@Profile("prod")
 @SpringBootApplication
 @RestController
-@RequestMapping("/api")
+//@RequestMapping("/api")
 public class PostReadingApplication implements CommandLineRunner {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -63,43 +58,9 @@ public class PostReadingApplication implements CommandLineRunner {
 	public static void main(String[] args) {
 		SpringApplication.run(PostReadingApplication.class, args);
 	}
-
-	
-	@GetMapping(path = "/echo", produces=MediaType.TEXT_PLAIN_VALUE)
-	@ResponseBody
-	public ResponseEntity<Object> echo() {					
-        return new ResponseEntity<Object>("Hello World", HttpStatus.OK);
-	}
-	
-    //get parameter
-    //The @ResponseBody annotation is used to serialize the JSON document
-	@GetMapping(path = "/comments", produces=MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public ResponseEntity<Object> getComments(@RequestParam(value = "postId") String postId) {
-						
-		//System.out.println(postId);
-		//List comments = repository.findCommentByPostId(Long.parseLong(postId));
-		List comments = commentRepository.findCommentByPostId(Long.parseLong(postId));
-		
-        return new ResponseEntity<Object>(comments, HttpStatus.OK);
-	}	
-	
-	//path parameter
-	@GetMapping(path = "/posts", produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> page() {
-		//@RequestParam(value = "startDate") String startDate, @RequestParam(value = "endDate") String endDate
-		//List posts = repository.findPostByDate(java.sql.Timestamp.valueOf(startDate + " 00:00:00"), java.sql.Timestamp.valueOf(endDate + " 23:59:59"));
-
-		List posts = postRepository.findAll();
-		
-        return new ResponseEntity<Object>(posts, HttpStatus.OK);
-	}	
-	
-	
+							
 	public static List<Post> requestPost(String postURL) throws IOException, JSONException {
-		
-		Gson gson = new Gson();				
-
+			
 	    URL urlForGetRequest = new URL(postURL);
 	    String readLine = null;
 	    String result = "";
@@ -118,8 +79,7 @@ public class PostReadingApplication implements CommandLineRunner {
 	        } 
 	        in.close();	    	   
 	        
-	        Type listType = new TypeToken<List<Post>>(){}.getType();
-	        posts = gson.fromJson(result, listType);
+	        posts = FifiUtil.jsonListToJavaObjectList(result, Post.class);
 	        	      	      
 	    } else {
 	        System.out.println("NOT WORKING");
@@ -128,8 +88,7 @@ public class PostReadingApplication implements CommandLineRunner {
 	}
 
 	public static List<Comment> requestComment(String commentURL) throws IOException, JSONException {
-		
-		Gson gson = new Gson();		
+			
 	    URL urlForGetRequest = new URL(commentURL);
 	    String readLine = null;
 	    String result = "";
@@ -148,8 +107,7 @@ public class PostReadingApplication implements CommandLineRunner {
 	        } 
 	        in.close();	    	   
 	        
-	        Type listType = new TypeToken<List<Comment>>(){}.getType();
-	        comments = gson.fromJson(result, listType);
+	        comments = FifiUtil.jsonListToJavaObjectList(result, Comment.class);
 	        	      	      
 	    } else {
 	        System.out.println("NOT WORKING");

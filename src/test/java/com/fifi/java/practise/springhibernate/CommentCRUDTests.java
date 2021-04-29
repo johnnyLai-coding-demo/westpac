@@ -32,23 +32,17 @@ class CommentCRUDTests {
 	
     @Autowired
     private CommentRepository repository;
-
-
-//    @BeforeEach
-//    public void beforeEachTest() throws IOException {
-//        MockitoAnnotations.openMocks(this);
-//    }	    
-
 	
     @Test    
     public void commentCRUD() {
 
+    	//only got insert/Retrieval test cases as this application not involving update/delete logic
     	List list = repository.findAll();
     	List inputList = new ArrayList();
     	
         assertNotNull(list);
         assertEquals(list.size(), 0);
-        //when(repository.save(any(Comment.class)).thenReturn(userToReturnFromRepository);
+
         
         Comment johnComment = new Comment(1L, "John", "john@gmail.com", "john_msg_body");
         Comment maryComment = new Comment(1L, "Mary", "Mary@gmail.com", "mary_msg_body");
@@ -60,9 +54,7 @@ class CommentCRUDTests {
         list = repository.findAll();
         
         assertNotNull(list);
-        assertEquals(list.size(), 2);
-        
-       // System.out.println(list);
+        assertEquals(list.size(), 2);        
     }
 
 }

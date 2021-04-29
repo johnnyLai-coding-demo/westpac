@@ -90,6 +90,25 @@ public class Post {
 		return String.format("Post [id=%s, userId=%s, title=%s, body=%s]", id, userId, title, body);
 	}
 
+	//ignore ID as it is auto-increment
+	@Override  
+	public boolean equals(Object obj)   
+	{  
+		if (obj == null)   
+		return false;  
+ 
+		if (obj.getClass() == this.getClass())	{
+			
+			Post postObj = (Post) obj;
+			
+			if (this.getBody().equals(postObj.getBody()) && 
+				this.getTitle().equals(postObj.getTitle()) &&
+				this.getUserId().longValue() == postObj.getUserId().longValue())	{
+				return true;								
+			}
+		}
+		return false;
+	} 		
 }
 
 
