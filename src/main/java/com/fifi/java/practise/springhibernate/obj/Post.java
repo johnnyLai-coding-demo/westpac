@@ -16,33 +16,40 @@ public class Post {
 	@Column(name = "ID")
 	private Long id;
 	
-	@Column(name = "MESSAGE")
-	private String message;
+	@Column(name = "USERID")
+	private Long userId;
 	
-	@Column(name = "PARENTID")
-	private Long parentId;
+	@Column(name = "TITLE")
+	private String title;
+	
+	@Column(name = "BODY", columnDefinition="CLOB")
+	private String body;
+	
 
-	@Column(name = "CREATEDAT", columnDefinition="DATETIME")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdAt;
+//	@Column(name = "CREATEDAT", columnDefinition="DATETIME")
+//	@Temporal(TemporalType.TIMESTAMP)
+//	private Date createdAt;
 	
 	public Post() {
 		super();
 	}
 
-	public Post(Long id, String message, Long parentId, Date createdAt) {
+	public Post(Long id, Long userId, String title, String body) {
 		super();
 		this.id = id;
-		this.message = message;
-		this.parentId = parentId;
-		this.createdAt = createdAt;
+		this.userId = userId;
+		this.title = title;
+		this.body = body;
 	}
 
-	public Post(String message, Long parentId) {
+	public Post(Long userId, String title, String body) {
 		super();
-		this.message = message;
-		this.parentId = parentId;
-	}
+		this.userId = userId;
+		this.title = title;
+		this.body = body;
+	}	
+	
+
 
 	public Long getId() {
 		return id;
@@ -52,33 +59,33 @@ public class Post {
 		this.id = id;
 	}
 
-	public String getMessage() {
-		return message;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
-	public Long getParentId() {
-		return parentId;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setParentId(Long parentId) {
-		this.parentId = parentId;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public Date getCreatedAt() {
-		return createdAt;
+	public String getBody() {
+		return body;
 	}
 
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
+	public void setBody(String body) {
+		this.body = body;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("Post [id=%s, message=%s, parentId=%s, createdAt=%s]", id, message, parentId, createdAt);
+		return String.format("Post [id=%s, userId=%s, title=%s, body=%s]", id, userId, title, body);
 	}
 
 }
