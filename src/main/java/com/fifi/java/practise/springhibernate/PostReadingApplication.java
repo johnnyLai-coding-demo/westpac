@@ -13,11 +13,12 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.configurationprocessor.json.JSONException;
-
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -29,14 +30,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fifi.java.practise.springhibernate.obj.Comment;
 import com.fifi.java.practise.springhibernate.obj.Post;
+import com.fifi.java.practise.springhibernate.repository.CommentDBfactory;
 import com.fifi.java.practise.springhibernate.repository.CommentRepository;
+import com.fifi.java.practise.springhibernate.repository.PostDBfactory;
 import com.fifi.java.practise.springhibernate.repository.PostRepository;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 
-
-
+@Profile("!test")
 @SpringBootApplication
 @RestController
 @RequestMapping("/api")
@@ -49,6 +51,14 @@ public class PostReadingApplication implements CommandLineRunner {
 	
 	@Autowired	
 	CommentRepository commentRepository;
+	
+	
+	@Value("${POST_URL}")
+	private String POST_URL;
+
+	@Value("${COMMENT_URL}")
+	private String COMMENT_URL;	
+
 	
 	public static void main(String[] args) {
 		SpringApplication.run(PostReadingApplication.class, args);
@@ -86,10 +96,11 @@ public class PostReadingApplication implements CommandLineRunner {
 	}	
 	
 	
-	public static List<Post> requestPost() throws IOException, JSONException {
+	public static List<Post> requestPost(String postURL) throws IOException, JSONException {
 		
 		Gson gson = new Gson();				
-	    URL urlForGetRequest = new URL("https://jsonplaceholder.typicode.com/posts/");
+
+	    URL urlForGetRequest = new URL(postURL);
 	    String readLine = null;
 	    String result = "";
 	    HttpURLConnection conection = (HttpURLConnection) urlForGetRequest.openConnection();
@@ -116,10 +127,10 @@ public class PostReadingApplication implements CommandLineRunner {
 	    return posts;
 	}
 
-	public static List<Comment> requestComment() throws IOException, JSONException {
+	public static List<Comment> requestComment(String commentURL) throws IOException, JSONException {
 		
-		Gson gson = new Gson();				
-	    URL urlForGetRequest = new URL("https://jsonplaceholder.typicode.com/comments/");
+		Gson gson = new Gson();		
+	    URL urlForGetRequest = new URL(commentURL);
 	    String readLine = null;
 	    String result = "";
 	    HttpURLConnection conection = (HttpURLConnection) urlForGetRequest.openConnection();
@@ -146,65 +157,20 @@ public class PostReadingApplication implements CommandLineRunner {
 	    return comments;
 	}	
 	
-	public void insertPostList(List<Post> postList)	{
-		
-		Post post = null;
-		
-		for (int i=0; i<postList.size(); i++)	{
-			post = postList.get(i);
-			insertPost(post);
-		}
-	}
-	
-	public void insertPost(Post post)	{
-		
-		Long userId = post.getUserId();
-		String title = post.getTitle();
-		String body = post.getBody();
-		postRepository.save(new Post(userId, title, body));		
-	}
-	
-	public void insertCommentList(List<Comment> commentList)	{
-		
-		Comment comment = null;
-		
-		for (int i=0; i<commentList.size(); i++)	{
-			comment = commentList.get(i);
-			insertComment(comment);
-		}
-	}
-	
-	public void insertComment(Comment post)	{
-		
-		Long postId = post.getPostId();
-		String name = post.getName();
-		String email = post.getEmail();
-		String body = post.getBody();
-		commentRepository.save(new Comment(postId, name, email, body));		
-	}	
-	
 	@Override		
 	public void run(String... args) throws Exception {
 
-
-		List<Post> posts = requestPost();
-		insertPostList(posts);
+		List<Post> posts = requestPost(POST_URL);
+		PostDBfactory.insertPostList(postRepository, posts);
 		logger.info("All posts -> {}", postRepository.findAll().size());
-
 		
-		List<Comment> comments = requestComment();
-		insertCommentList(comments);
+		List<Comment> comments = requestComment(COMMENT_URL);
+		CommentDBfactory.insertCommentList(commentRepository, comments);
 		logger.info("All comments -> {}", commentRepository.findAll().size());
-		
-
-		
-		
-		
+						
 		//List students = repository.findByDate(java.sql.Timestamp.valueOf("2008-01-01 00:00:00"), java.sql.Timestamp.valueOf("2013-09-04 13:30:00"));
 //		List students = repository.findPostByDate(java.sql.Timestamp.valueOf("2008-01-01 00:00:00"), java.sql.Timestamp.valueOf("2013-09-04 00:00:00"));
-		//List students = repository.findByParentId(1L);
-		
-//		System.out.println(students);
+
 	}
 
 
