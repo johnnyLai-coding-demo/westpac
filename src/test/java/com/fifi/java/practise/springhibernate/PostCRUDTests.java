@@ -16,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -29,7 +30,7 @@ import com.fifi.java.practise.springhibernate.repository.PostRepository;
 @ActiveProfiles("test")
 @EnableAutoConfiguration
 @RunWith(SpringRunner.class)
-@DataJpaTest
+@SpringBootTest(classes={ PostReadingApplicationAPI.class })
 class PostCRUDTests {
 	
 	@Autowired

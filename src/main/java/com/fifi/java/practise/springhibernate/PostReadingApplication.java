@@ -19,7 +19,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.context.annotation.Profile;
-
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fifi.java.practise.springhibernate.obj.Comment;
@@ -33,12 +33,10 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 
-@Profile("prod")
+@Profile({"prod", "default"})
 @SpringBootApplication
-@RestController
-//@RequestMapping("/api")
 public class PostReadingApplication implements CommandLineRunner {
-
+	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired	
@@ -53,11 +51,6 @@ public class PostReadingApplication implements CommandLineRunner {
 
 	@Value("${COMMENT_URL}")
 	private String COMMENT_URL;	
-
-	
-	public static void main(String[] args) {
-		SpringApplication.run(PostReadingApplication.class, args);
-	}
 							
 	public static List<Post> requestPost(String postURL) throws IOException, JSONException {
 			

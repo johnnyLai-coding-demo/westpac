@@ -2,8 +2,11 @@ package com.fifi.java.practise.springhibernate;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,19 +15,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fifi.java.practise.springhibernate.obj.Comment;
+import com.fifi.java.practise.springhibernate.obj.Post;
+import com.fifi.java.practise.springhibernate.repository.CommentDBfactory;
 import com.fifi.java.practise.springhibernate.repository.CommentRepository;
+import com.fifi.java.practise.springhibernate.repository.PostDBfactory;
 import com.fifi.java.practise.springhibernate.repository.PostRepository;
 
 @RestController
 @RequestMapping("/api")
 @SpringBootApplication
-public class PostReadingApplicationAPI 
+
+public class PostReadingApplicationAPI
 {
+		
     public static void main( String[] args )
     {
+    	
     	SpringApplication.run(PostReadingApplicationAPI.class, args);
-    }
-
+    }    
+    
 	@Autowired	
 	CommentRepository commentRepository;    
 
@@ -60,5 +71,7 @@ public class PostReadingApplicationAPI
 		
         return new ResponseEntity<Object>(posts, HttpStatus.OK);
 	}	
+	
+	
 
 }
