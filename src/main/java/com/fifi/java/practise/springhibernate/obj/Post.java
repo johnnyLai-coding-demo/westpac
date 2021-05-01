@@ -1,15 +1,11 @@
 package com.fifi.java.practise.springhibernate.obj;
 
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
-import org.springframework.context.annotation.Profile;
 
 @Entity
 public class Post {

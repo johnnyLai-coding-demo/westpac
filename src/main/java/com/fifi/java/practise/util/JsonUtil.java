@@ -9,7 +9,7 @@ import com.google.gson.reflect.TypeToken;
 
 
 
-public class FifiUtil {
+public class JsonUtil {
 
 	public static <E> List jsonListToJavaObjectList(String jsonString, Class objClass)	{
 		Gson gson = new Gson();	

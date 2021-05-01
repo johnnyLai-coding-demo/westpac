@@ -33,8 +33,8 @@ import com.fifi.java.practise.springhibernate.obj.Comment;
 
 import com.fifi.java.practise.springhibernate.repository.CommentDBfactory;
 import com.fifi.java.practise.springhibernate.repository.CommentRepository;
-import com.fifi.java.practise.util.FifiUtil;
-import com.google.gson.Gson;
+import com.fifi.java.practise.util.JsonUtil;
+
 
 
 @ActiveProfiles("test")
@@ -95,7 +95,7 @@ class CommentAPITests {
 				.getResponse()
 				.getContentAsString();
 
-        list = FifiUtil.jsonListToJavaObjectList(result, Comment.class);
+        list = JsonUtil.jsonListToJavaObjectList(result, Comment.class);
         
         assertNotNull(list);
         assertEquals(list.size(), 2);

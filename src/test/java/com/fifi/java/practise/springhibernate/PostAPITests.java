@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Type;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,14 +29,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.fifi.java.practise.springhibernate.obj.Comment;
 import com.fifi.java.practise.springhibernate.obj.Post;
-import com.fifi.java.practise.springhibernate.repository.CommentDBfactory;
-import com.fifi.java.practise.springhibernate.repository.CommentRepository;
+
 import com.fifi.java.practise.springhibernate.repository.PostDBfactory;
 import com.fifi.java.practise.springhibernate.repository.PostRepository;
-import com.fifi.java.practise.util.FifiUtil;
-import com.google.gson.Gson;
+import com.fifi.java.practise.util.JsonUtil;
+
 
 
 @ActiveProfiles("test")
@@ -96,7 +94,7 @@ class PostAPITests {
 				.getResponse()
 				.getContentAsString();
 
-        list = FifiUtil.jsonListToJavaObjectList(result, Post.class);
+        list = JsonUtil.jsonListToJavaObjectList(result, Post.class);
         
         assertNotNull(list);
         assertEquals(list.size(), 2);
