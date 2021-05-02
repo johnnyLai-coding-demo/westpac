@@ -1,10 +1,14 @@
 package com.fifi.java.practise.springhibernate.repository;
 
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.fifi.java.practise.springhibernate.obj.Comment;
 import com.fifi.java.practise.springhibernate.obj.Post;
 
 @Repository
@@ -16,7 +20,8 @@ public interface PostRepository extends JpaRepository<Post, Long>{
 	
 //	@Query("SELECT s FROM Post s where PARENTID = :parentId")
 //	List<Post> findCommentByPostId (@Param("parentId") Long parentId);
-	
-	
+
+	@Query(value = "select P.ID, P.BODY, P.TITLE, P.USERID, count(*) as NUMOFCOMMENTS from Post P, Comment C where P.ID = C.POSTID GROUP BY P.ID", nativeQuery = true)
+	List<Post> findAllPostsWithCommentCount ();
 }
 

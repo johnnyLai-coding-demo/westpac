@@ -4,8 +4,11 @@ package com.fifi.java.practise.springhibernate.obj;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 
 @Entity
@@ -26,8 +29,6 @@ public class Comment {
 	
 	@Column(name = "BODY", columnDefinition="CLOB")
 	private String body;
-	
-
 	
 	public Comment() {
 		super();

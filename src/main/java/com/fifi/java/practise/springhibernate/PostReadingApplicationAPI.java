@@ -61,7 +61,7 @@ public class PostReadingApplicationAPI
 	//path parameter
 	@GetMapping(path = "/posts", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> page() {
-		List posts = postRepository.findAll();
+		List posts = postRepository.findAllPostsWithCommentCount();
 		
         return new ResponseEntity<Object>(posts, HttpStatus.OK);
 	}	

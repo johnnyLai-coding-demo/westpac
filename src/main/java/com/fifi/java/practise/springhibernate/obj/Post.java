@@ -23,6 +23,8 @@ public class Post {
 	@Column(name = "BODY", columnDefinition="CLOB")
 	private String body;
 	
+	@Column(name = "NUMOFCOMMENTS")
+	private Integer commentCount;	
 
 //	@Column(name = "CREATEDAT", columnDefinition="DATETIME")
 //	@Temporal(TemporalType.TIMESTAMP)
@@ -45,9 +47,7 @@ public class Post {
 		this.userId = userId;
 		this.title = title;
 		this.body = body;
-	}	
-	
-
+	}		
 
 	public Long getId() {
 		return id;
@@ -79,6 +79,14 @@ public class Post {
 
 	public void setBody(String body) {
 		this.body = body;
+	}	
+	
+	public Integer getCommentCount() {
+		return commentCount;
+	}
+
+	public void setCommentCount(Integer commentCount) {
+		this.commentCount = commentCount;
 	}
 
 	@Override

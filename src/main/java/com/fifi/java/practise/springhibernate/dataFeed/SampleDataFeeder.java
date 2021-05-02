@@ -57,7 +57,7 @@ public class SampleDataFeeder implements CommandLineRunner {
 		List<Comment> comments = postReadingApplication.requestComment(COMMENT_URL);
 		CommentDBfactory.insertCommentList(commentRepository, comments);
 		logger.info("All comments -> {}", commentRepository.findAll().size());
-
+		logger.info("Finish loading sample data");
 	}
 
 
