@@ -56,7 +56,6 @@ class PostCRUDTests {
         list = repository.findAll();
         
         assertNotNull(list);
-        System.out.println(list);
         assertEquals(list.size(), 2);
         
 
