@@ -1,0 +1,12 @@
+HELP.md
+
+target/
+
+
+mvnw
+mvnw.cmd
+.project
+.classpath
+.settings
+.mvn
+.git/
