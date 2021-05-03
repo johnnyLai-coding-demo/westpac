@@ -1,6 +1,9 @@
 package com.fifi.java.practise.springhibernate;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -10,12 +13,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 
 import com.fifi.java.practise.springhibernate.repository.CommentRepository;
 
@@ -51,9 +54,13 @@ public class PostReadingApplicationAPI
     //The @ResponseBody annotation is used to serialize the JSON document
 	@GetMapping(path = "/comments", produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<Object> getComments(@RequestParam(value = "postId") String postId) {
-						
-		List comments = commentRepository.findCommentByPostId(Long.parseLong(postId));
+	public ResponseEntity<Object> getComments(@RequestParam(value = "postId") String postId) throws NumberFormatException  {
+		List comments;
+		try	{										
+			comments = commentRepository.findCommentByPostId(Long.parseLong(postId));
+		}	catch (NumberFormatException numberFormatException)	{
+			throw new NumberFormatException("Please provide valid post id");
+		}
 		
         return new ResponseEntity<Object>(comments, HttpStatus.OK);
 	}	
@@ -66,6 +73,11 @@ public class PostReadingApplicationAPI
         return new ResponseEntity<Object>(posts, HttpStatus.OK);
 	}	
 	
-	
+	@ExceptionHandler(NumberFormatException.class)
+	public ResponseEntity<String> rulesForCustomerNotFound(HttpServletRequest req, Exception e) 
+	{
+		String error = new String(e.getMessage());
+		return new ResponseEntity<String>(error, HttpStatus.BAD_REQUEST);
+	}
 
 }

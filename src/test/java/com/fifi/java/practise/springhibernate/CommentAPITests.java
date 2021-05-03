@@ -70,6 +70,8 @@ class CommentAPITests {
     @Test    
     public void commentAPITest() throws UnsupportedEncodingException, Exception {
 
+    	repository.deleteAll();
+    	
     	//only got insert/Retrieval test cases as this application not involving update/delete logic
     	List list = repository.findAll();
     	List inputList = new ArrayList();
@@ -101,6 +103,18 @@ class CommentAPITests {
         assertEquals(list.size(), 2);
         assertTrue(((Comment)list.get(0)).equals(johnComment) );
         assertTrue(((Comment)list.get(1)).equals(maryComment) );
-    }	
+    }
+    
+    @Test    
+    public void commentAPIErrorTest() throws UnsupportedEncodingException, Exception {
+                
+		String result = mockMvc.perform(get("http://test/api/comments").param("postId", ""))
+				.andExpect(status().is(400))
+				.andReturn()
+				.getResponse()
+				.getContentAsString();
+
+		assertEquals(result, "Please provide valid post id");
+    }    
 	
 }

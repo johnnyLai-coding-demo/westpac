@@ -23,6 +23,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.fifi.java.practise.springhibernate.repository.CommentRepository;
 import com.fifi.java.practise.springhibernate.request.PostCommentHttpRequest;
 
 
@@ -45,13 +46,16 @@ class GetRequestTests {
 	private PostCommentHttpRequest postReadingApplication;
 	
 
-	
+    @Autowired
+    private CommentRepository repository;
 
 	
 
 
     @Test    
     public void commentAPITest() throws UnsupportedEncodingException, Exception {
+    	repository.deleteAll();
+    	
     	System.out.println(POST_URL);
     	System.out.println(COMMENT_URL);
     	List list = postReadingApplication.requestComment(COMMENT_URL);

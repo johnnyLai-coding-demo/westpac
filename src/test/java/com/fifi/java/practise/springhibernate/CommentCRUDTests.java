@@ -35,6 +35,8 @@ class CommentCRUDTests {
     @Test    
     public void commentCRUD() {
 
+    	repository.deleteAll();
+    	
     	//only got insert/Retrieval test cases as this application not involving update/delete logic
     	List list = repository.findAll();
     	List inputList = new ArrayList();
