@@ -50,6 +50,11 @@ PostCRUDTests
 - postCRUD test the JPA repository, mainly focus on insert/retrieval as this application not involving update/delete
 
 
+How to execute the unit test cases?
+
+Navigate to the folder with pom.xml and "mvn test"
+
+or run them in eclipse
 
 Documentation
 
