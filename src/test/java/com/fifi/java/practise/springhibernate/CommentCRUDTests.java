@@ -19,18 +19,23 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.fifi.java.practise.springhibernate.api.PostReadingApplicationAPI;
 import com.fifi.java.practise.springhibernate.obj.Comment;
 import com.fifi.java.practise.springhibernate.repository.CommentDBfactory;
 import com.fifi.java.practise.springhibernate.repository.CommentRepository;
+import com.fifi.java.practise.springhibernate.repository.PostDBfactory;
 
 @ActiveProfiles("test")
 @EnableAutoConfiguration
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes={ PostReadingApplicationAPI.class })
+@SpringBootTest
 class CommentCRUDTests {
 	
     @Autowired
     private CommentRepository repository;
+	
+	@Autowired	
+	CommentDBfactory commentDBfactory;	    
 	
     @Test    
     public void commentCRUD() {
@@ -51,7 +56,7 @@ class CommentCRUDTests {
         inputList.add(johnComment);
         inputList.add(maryComment);
         
-        CommentDBfactory.insertCommentList(repository, inputList);
+        commentDBfactory.insertCommentList(repository, inputList);
         list = repository.findAll();
         
         assertNotNull(list);

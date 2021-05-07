@@ -2,12 +2,14 @@ package com.fifi.java.practise.springhibernate.repository;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
 
 import com.fifi.java.practise.springhibernate.obj.Post;
 
+@Component
 public class PostDBfactory {
 
-	public static void insertPostList(PostRepository postRepository, List<Post> postList)	{
+	public void insertPostList(PostRepository postRepository, List<Post> postList)	{
 		
 		Post post = null;
 		
@@ -17,7 +19,7 @@ public class PostDBfactory {
 		}
 	}
 	
-	public static void insertPost(PostRepository postRepository, Post post)	{
+	public void insertPost(PostRepository postRepository, Post post)	{
 		
 		Long userId = post.getUserId();
 		String title = post.getTitle();

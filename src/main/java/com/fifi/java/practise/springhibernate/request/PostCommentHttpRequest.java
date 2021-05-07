@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.configurationprocessor.json.JSONException;
-
+import org.springframework.stereotype.Component;
 
 import com.fifi.java.practise.springhibernate.obj.Comment;
 import com.fifi.java.practise.springhibernate.obj.Post;
@@ -30,7 +30,7 @@ import com.fifi.java.practise.util.JsonUtil;
 
 
 
-@SpringBootApplication
+@Component
 public class PostCommentHttpRequest {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());

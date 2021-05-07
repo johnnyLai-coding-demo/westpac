@@ -20,7 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-
+import com.fifi.java.practise.springhibernate.api.PostReadingApplicationAPI;
 import com.fifi.java.practise.springhibernate.obj.Post;
 
 import com.fifi.java.practise.springhibernate.repository.PostDBfactory;
@@ -29,11 +29,14 @@ import com.fifi.java.practise.springhibernate.repository.PostRepository;
 @ActiveProfiles("test")
 @EnableAutoConfiguration
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes={ PostReadingApplicationAPI.class })
+@SpringBootTest
 class PostCRUDTests {
 	
 	@Autowired
     private PostRepository repository;
+	
+	@Autowired	
+	PostDBfactory postDBfactory;	
 
     @Test    
     public void postCRUD() {
@@ -54,7 +57,7 @@ class PostCRUDTests {
         inputList.add(johnPost);
         inputList.add(maryPost);
         
-        PostDBfactory.insertPostList(repository, inputList);
+        postDBfactory.insertPostList(repository, inputList);
         list = repository.findAll();
         
         assertNotNull(list);

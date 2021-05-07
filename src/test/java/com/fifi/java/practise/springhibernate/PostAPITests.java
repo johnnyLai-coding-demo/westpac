@@ -29,8 +29,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.fifi.java.practise.springhibernate.api.PostReadingApplicationAPI;
 import com.fifi.java.practise.springhibernate.obj.Post;
-
+import com.fifi.java.practise.springhibernate.repository.CommentDBfactory;
 import com.fifi.java.practise.springhibernate.repository.PostDBfactory;
 import com.fifi.java.practise.springhibernate.repository.PostRepository;
 import com.fifi.java.practise.util.JsonUtil;
@@ -40,14 +41,17 @@ import com.fifi.java.practise.util.JsonUtil;
 @ActiveProfiles("test")
 @EnableAutoConfiguration
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment=WebEnvironment.MOCK, classes={ PostReadingApplicationAPI.class })
+@SpringBootTest
 class PostAPITests {
 	
 	private MockMvc mockMvc;
 
     @Autowired
     private PostRepository repository;	
-	
+
+	@Autowired	
+	PostDBfactory postDBfactory;
+    
 	@Autowired
 	private WebApplicationContext webApplicationContext;	
 	
@@ -87,7 +91,7 @@ class PostAPITests {
         inputList.add(johnPost);
         inputList.add(maryPost);
         
-        PostDBfactory.insertPostList(repository, inputList);
+        postDBfactory.insertPostList(repository, inputList);
         
         
 		String result = mockMvc.perform(get("http://test/api/posts"))

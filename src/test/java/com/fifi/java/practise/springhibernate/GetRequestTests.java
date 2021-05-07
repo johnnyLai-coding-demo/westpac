@@ -31,7 +31,7 @@ import com.fifi.java.practise.springhibernate.request.PostCommentHttpRequest;
 @ActiveProfiles("test")
 @EnableAutoConfiguration
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes={ PostCommentHttpRequest.class })
+@SpringBootTest
 
 class GetRequestTests {
 	
