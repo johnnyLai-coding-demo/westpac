@@ -14,6 +14,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 
 import com.fifi.java.practise.springhibernate.obj.Comment;
 import com.fifi.java.practise.springhibernate.obj.Post;
@@ -25,7 +26,7 @@ import com.fifi.java.practise.springhibernate.request.PostCommentHttpRequest;
 
 
 @Profile({"prod", "default"})
-@SpringBootApplication
+@Component
 public class SampleDataFeeder implements CommandLineRunner {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -35,6 +36,12 @@ public class SampleDataFeeder implements CommandLineRunner {
 	
 	@Autowired	
 	CommentRepository commentRepository;
+
+	@Autowired	
+	PostDBfactory postDBfactory;
+	
+	@Autowired	
+	CommentDBfactory commentDBfactory;	
 	
 	@Autowired
 	PostCommentHttpRequest postReadingApplication;
@@ -51,11 +58,11 @@ public class SampleDataFeeder implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 
 		List<Post> posts = postReadingApplication.requestPost(POST_URL);
-		PostDBfactory.insertPostList(postRepository, posts);
+		postDBfactory.insertPostList(postRepository, posts);
 		logger.info("All posts -> {}", postRepository.findAll().size());
 		
 		List<Comment> comments = postReadingApplication.requestComment(COMMENT_URL);
-		CommentDBfactory.insertCommentList(commentRepository, comments);
+		commentDBfactory.insertCommentList(commentRepository, comments);
 		logger.info("All comments -> {}", commentRepository.findAll().size());
 		logger.info("Finish loading sample data");
 	}
