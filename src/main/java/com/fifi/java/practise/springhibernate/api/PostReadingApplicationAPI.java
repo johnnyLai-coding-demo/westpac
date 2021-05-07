@@ -72,6 +72,13 @@ public class PostReadingApplicationAPI
         return new ResponseEntity<Object>(posts, HttpStatus.OK);
 	}	
 	
+    @GetMapping(value = "/private", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> privateEndpoint() {
+
+        
+        return new ResponseEntity<Object>("All good. You can see this because you are Authenticated.", HttpStatus.OK);
+    }	
+	
 	@ExceptionHandler(NumberFormatException.class)
 	public ResponseEntity<String> rulesForCustomerNotFound(HttpServletRequest req, Exception e) 
 	{
