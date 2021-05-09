@@ -15,11 +15,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fifi.java.practise.springhibernate.obj.Comment;
 import com.fifi.java.practise.springhibernate.repository.CommentRepository;
 
 import com.fifi.java.practise.springhibernate.repository.PostRepository;
@@ -70,6 +73,13 @@ public class PostReadingApplicationAPI
 		List posts = postRepository.findAllPostsWithCommentCount();
 		
         return new ResponseEntity<Object>(posts, HttpStatus.OK);
+	}	
+
+	@PostMapping (path = "/comment", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Object> leaveComment(@RequestBody Comment comment) {
+
+		Comment savedComment = commentRepository.save(comment);
+		return new ResponseEntity<Object>(HttpStatus.OK);
 	}	
 	
     @GetMapping(value = "/private", produces=MediaType.APPLICATION_JSON_VALUE)

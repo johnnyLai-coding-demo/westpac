@@ -45,13 +45,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .mvcMatchers("/api/comments").permitAll()
                 .mvcMatchers("/api/posts").permitAll()
+                .mvcMatchers("/api/comment").permitAll()
                 .mvcMatchers("/api/private").authenticated()
                 .and().cors()
                 .and().oauth2ResourceServer().jwt()
                 .decoder(jwtDecoder())
                 .jwtAuthenticationConverter(jwtAuthenticationConverter());        
     	
-
+        //allow post request
+        http.csrf().disable();
+        
+        //allow iframe - allow H2 console
+        http.headers().frameOptions().disable();
     }
 
     
