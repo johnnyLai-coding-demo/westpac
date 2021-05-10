@@ -33,13 +33,7 @@ import com.fifi.java.practise.springhibernate.repository.PostRepository;
 
 public class PostReadingApplicationAPI
 {
-		
-//    public static void main( String[] args )
-//    {
-//    	
-//    	SpringApplication.run(PostReadingApplicationAPI.class, args);
-//    }    
-//    
+
 	@Autowired	
 	CommentRepository commentRepository;    
 

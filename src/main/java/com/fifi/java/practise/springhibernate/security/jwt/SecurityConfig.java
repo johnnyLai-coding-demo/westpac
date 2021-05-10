@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .mvcMatchers("/api/comments").permitAll()
                 .mvcMatchers("/api/posts").permitAll()
-                .mvcMatchers("/api/comment").permitAll()
+                .mvcMatchers("/api/comment").authenticated()
                 .mvcMatchers("/api/private").authenticated()
                 .and().cors()
                 .and().oauth2ResourceServer().jwt()
