@@ -1,5 +1,13 @@
 # westpac
 
+Dockerfile added
+
+build docker image - "docker build -t westpac-interview-johnny ."
+
+run docker container - "docker run --rm -p 8080:8080 westpac-interview-johnny"
+
+
+
 Goals:
 
 This application is solely for the job interview purpose of Johnny Lai
