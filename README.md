@@ -1,4 +1,4 @@
-# westpac
+# Westpac
 
 Dockerfile added
 
