@@ -1,6 +1,7 @@
 package com.fifi.java.practise.springhibernate.api;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fifi.java.practise.springhibernate.obj.Comment;
+import com.fifi.java.practise.springhibernate.obj.Post;
 import com.fifi.java.practise.springhibernate.repository.CommentRepository;
 
 import com.fifi.java.practise.springhibernate.repository.PostRepository;
@@ -69,6 +71,17 @@ public class PostReadingApplicationAPI
         return new ResponseEntity<Object>(posts, HttpStatus.OK);
 	}	
 
+	@GetMapping(path = "/post", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Object> post(@RequestParam(value = "id") String postId) {
+		Post post;
+		try	{
+			post = postRepository.findPostById(Long.parseLong(postId));
+		}	catch (NumberFormatException numberFormatException)	{
+			throw new NumberFormatException("Please provide valid post id");
+		}		
+        return new ResponseEntity<Object>(post, HttpStatus.OK);
+	}	
+	
 	@PostMapping (path = "/comment", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> leaveComment(@RequestBody Comment comment) {
 

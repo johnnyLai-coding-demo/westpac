@@ -23,5 +23,8 @@ public interface PostRepository extends JpaRepository<Post, Long>{
 
 	@Query(value = "select P.ID, P.BODY, P.TITLE, P.USERID, count(*) as NUMOFCOMMENTS from Post P left join Comment C on P.ID = C.POSTID GROUP BY P.ID", nativeQuery = true)
 	List<Post> findAllPostsWithCommentCount ();
+	
+	@Query(value = "select P.ID, P.BODY, P.TITLE, P.USERID,  (select count(*) from COMMENT where POSTID = P.ID )as NUMOFCOMMENTS from POST P where P.ID = :postId", nativeQuery = true)
+	Post findPostById (@Param("postId") Long postId);	
 }
 
