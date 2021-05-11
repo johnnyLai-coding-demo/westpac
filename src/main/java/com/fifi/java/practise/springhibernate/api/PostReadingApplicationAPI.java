@@ -86,7 +86,7 @@ public class PostReadingApplicationAPI
 	public ResponseEntity<Object> leaveComment(@RequestBody Comment comment) {
 
 		Comment savedComment = commentRepository.save(comment);
-		return new ResponseEntity<Object>(HttpStatus.OK);
+		return new ResponseEntity<Object>(savedComment, HttpStatus.OK);
 	}	
 	
     @GetMapping(value = "/private", produces=MediaType.APPLICATION_JSON_VALUE)
