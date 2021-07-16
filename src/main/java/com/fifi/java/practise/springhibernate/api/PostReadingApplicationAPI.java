@@ -64,8 +64,8 @@ public class PostReadingApplicationAPI
 	}	
 
 	@GetMapping(path = "/someposts", produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> pageByParts(@RequestParam(value = "indexId") String indexId) {
-		List posts = postRepository.findSomePostsWithCommentCount(Long.parseLong(indexId));
+	public ResponseEntity<Object> pageByParts(@RequestParam(value = "startIndexId") String startIndexId, @RequestParam(value = "endIndexId") String endIndexId) {
+		List posts = postRepository.findSomePostsWithCommentCount(Long.parseLong(startIndexId), Long.parseLong(endIndexId));
 		
         return new ResponseEntity<Object>(posts, HttpStatus.OK);
 	}	
